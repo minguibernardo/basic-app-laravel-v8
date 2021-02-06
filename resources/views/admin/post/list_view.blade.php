@@ -1,5 +1,8 @@
 <h1 align='center'>Bem vindo ao BasicApp</h1>
 
+
+
+
 <ul style="display:flex;    width: 15%;
 display: flex;
 align-items: center;
@@ -11,12 +14,18 @@ margin-left: 40%;" align="center">
 </ul>
 <hr>
 
+@if (session('message'))
+
+<p align='center' style='color:orangered'>{{ session('message')}}</p>  <!--mostrando as message guardada no na session flash-->
+
+@endif
+
 <div align='center' style="margin:5% 40%;">
 
-    @foreach ($all_post as $item)
+    @foreach ($all_post as $post)
 
-<p align='left'>{{ $item->title }}</p>
-<p align='left'>{{ $item->content }}</p>
+<p align='left'>{{ $post->title }} &nbsp; &nbsp;[<a href="{{route('post.show', $post->id)}}"> <u>Show me</u></a>]</p>
+<p align='left'>{{ $post->content }}</p>
 @endforeach
 
 </div>

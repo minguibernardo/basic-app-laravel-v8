@@ -20,3 +20,9 @@ Route::get('/', function () {  return view('welcome');}); //para listar usamos g
 //Route type post
 Route::post('/post', [PostController::class, 'store'])->name('post.store'); // rota para o method action  do nosso formulario fazer o cadastro na BD
 
+//pegando dado na url
+Route::get('/post/{id}', [PostController::class, 'show'])->name('post.show');
+
+//deletando um item com http delete
+Route::delete('/post/{id}', [PostController::class, 'deleted'])->name('post.deleted');
+
