@@ -15,9 +15,9 @@ class PostController extends Controller
     {
 
 
-        $posts = Post::latest()->paginate(1); //ou all(); // paginate utilizamos para paginação da nossa lista caso haja varios itens
+        $posts = Post::latest()->paginate(); //ou all(); // paginate utilizamos para paginação da nossa lista caso haja varios itens
         //como ordenar uma lista no laravel vc pode usar ::orderBy('id', 'DESC')/OU ASC OU ainda o latest
-        ///dd($allpost) ; depurar uma variavel
+        //dd($allpost) ; depurar uma variavel
 
          return view('admin.post.list_view', compact('posts'));
     }
@@ -118,7 +118,7 @@ class PostController extends Controller
 
           $posts = Post::where('title','LIKE', "%{$request->search}%")
          ->orWhere('content','LIKE',"%{$request->search}%")
-         ->paginate(1);
+         ->paginate();
 
 
 
