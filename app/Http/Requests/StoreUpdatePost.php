@@ -27,7 +27,8 @@ class StoreUpdatePost extends FormRequest
             //my rules
 
             'title' => 'required|min:6|max:160',
-            'content' => ['required', 'min:6', 'max:10000']
+            'content' => ['nullable', 'min:6', 'max:10000'],
+            'img' => ['required', 'image']
          ];
     }
 }

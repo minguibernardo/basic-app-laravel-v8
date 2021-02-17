@@ -10,5 +10,5 @@ class Post extends Model
     use HasFactory;
 
     protected $table = 'posts';
-    protected $fillable = ['title', 'content']; //validando os dados que estao a vir do formulario e entrarao na BD
+    protected $fillable = ['title', 'content','img']; //validando os dados que estao a vir do formulario e entrarao na BD
 }

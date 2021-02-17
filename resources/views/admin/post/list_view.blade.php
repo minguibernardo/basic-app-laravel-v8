@@ -1,31 +1,58 @@
-<h1 align='center'>Bem vindo ao BasicApp</h1>
+@extends('admin.layouts.app')
+
+@section('title', 'BasicApp')
+@section('content')
+    <h1 align='center'>Bem vindo ao BasicApp</h1>
+    <ul style="display:flex;width: 15%; display: flex; align-items: center;text-align: center;justify-content: space-between; margin-left: 32%;"
+        align="center">
+        <li><a href="{{ route('post.add') }}">Create new post</a></li>
+        <!--pegando o caminho dinamicamente com o helper Route-->
+        <li><a href="{{ route('post.about') }}">About</a></li>
+        <li style="width: 0%; position: relative; top: 8px">
+            <form action="{{ route('post.search') }}" method="post">
+                @csrf
+                <input type="text" name="search" placeholder="pesquisar aqui titulo e etc...">
+                <button type="submit" style="position: absolute;top: 0;left: 178px;">Pesquisar</button>
+            </form>
+        </li>
+    </ul>
+    <hr>
+
+    @if (isset($palavra))
+
+        <p align='center'>Resultado obtido da palavra <u><strong> {{ $palavra }}</strong></u></p>
+
+    @else
+
+        <p align='center'>Olá temos uma sugestão para sí <u><strong> Pesquisa alguma coisa no pesquisador!!</strong></u></p>
+
+    @endif
 
 
+    @if (session('message'))
 
+        <p align='center' style='color:orangered'>{{ session('message') }}</p>
+        <!--mostrando as message guardada no na session flash-->
 
-<ul style="display:flex;    width: 15%;
-display: flex;
-align-items: center;
-text-align: center;
-justify-content: space-between;
-margin-left: 40%;" align="center">
-    <li><a href="{{route('post.add')}}">Create new post</a></li> <!--pegando o caminho dinamicamente com o helper Route-->
-    <li><a href="{{route('post.about')}}">About</a></li>
-</ul>
-<hr>
+    @endif
 
-@if (session('message'))
+    <div align='center' style="margin:5% 40%;">
 
-<p align='center' style='color:orangered'>{{ session('message')}}</p>  <!--mostrando as message guardada no na session flash-->
+        @foreach ($posts as $post)
+            <p align='left'>{{ $post->title }}</p>
+            <p align='left'>{{ $post->content }}</p>
+            <br>
+            &nbsp; &nbsp;[<a href="{{ route('post.show', $post->id) }}"> <u>Show</u></a>]
+            &nbsp; &nbsp;[<a href="{{ route('post.edit', $post->id) }}"> <u>Edit</u></a>]
+            <hr>
+        @endforeach
 
-@endif
+        @if (isset($filitros))
+            <span style="display: flex;justify-content: center;align-items: center;">
+                {{ $posts->appends($filitros)->links() }} </span>
+        @else
+            <span style="display: flex;justify-content: center;align-items: center;"> {{ $posts->links() }} </span>
+        @endif
+    </div>
 
-<div align='center' style="margin:5% 40%;">
-
-    @foreach ($all_post as $post)
-
-<p align='left'>{{ $post->title }} &nbsp; &nbsp;[<a href="{{route('post.show', $post->id)}}"> <u>Show me</u></a>]</p>
-<p align='left'>{{ $post->content }}</p>
-@endforeach
-
-</div>
+@endsection
