@@ -25,7 +25,7 @@
 
             <!-- Footer -->
             <footer>
-                <p>Copyright © 2020 Dreamguys.</p>
+                <p>Copyright © 2020  Teste.</p>
             </footer>
             <!-- /Footer -->
 
