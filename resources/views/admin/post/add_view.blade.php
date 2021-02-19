@@ -5,7 +5,7 @@
     <h1 align='center'>Criar novos Posts</h1>
     <div align='center'>
 
-        <form action="{{ route('post.store') }}" method="post" style="display: table-caption;">
+        <form action="{{ route('post.store') }}" method="post" style="display: table-caption;" enctype="multipart/form-data">
             @include('admin.post._partials.form')
         </form>
 

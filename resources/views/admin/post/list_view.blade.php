@@ -2,9 +2,8 @@
 
 @section('title', 'BasicApp')
 @section('content')
-    <h1 align='center'>Bem vindo ao BasicApp</h1>
-    <ul style="display:flex;width: 15%; display: flex; align-items: center;text-align: center;justify-content: space-between; margin-left: 32%;"
-        align="center">
+    <h1 align='left'>Bem vindo ao BasicApp</h1>
+    <ul align="left">
         <li><a href="{{ route('post.add') }}">Create new post</a></li>
         <!--pegando o caminho dinamicamente com o helper Route-->
         <li><a href="{{ route('post.about') }}">About</a></li>
@@ -20,30 +19,33 @@
 
     @if (isset($palavra))
 
-        <p align='center'>Resultado obtido da palavra <u><strong> {{ $palavra }}</strong></u></p>
+        <p align='left'>Resultado obtido da palavra <u><strong> {{ $palavra }}</strong></u></p>
 
     @else
 
-        <p align='center'>Olá temos uma sugestão para sí <u><strong> Pesquisa alguma coisa no pesquisador!!</strong></u></p>
+        <p align='left'>Olá temos uma sugestão para sí <u><strong> Pesquisa alguma coisa no pesquisador!!</strong></u></p>
 
     @endif
 
 
     @if (session('message'))
 
-        <p align='center' style='color:orangered'>{{ session('message') }}</p>
+        <p align='left' style='color:orangered'>{{ session('message') }}</p>
         <!--mostrando as message guardada no na session flash-->
 
     @endif
 
-    <div align='center' style="margin:5% 40%;">
+    <div align='left'>
 
         @foreach ($posts as $post)
+
+           <p><img src="{{ url("storage/{$post->image}") }}" alt="" width="90"></p>
             <p align='left'>{{ $post->title }}</p>
             <p align='left'>{{ $post->content }}</p>
             <br>
             &nbsp; &nbsp;[<a href="{{ route('post.show', $post->id) }}"> <u>Show</u></a>]
             &nbsp; &nbsp;[<a href="{{ route('post.edit', $post->id) }}"> <u>Edit</u></a>]
+
             <hr>
         @endforeach
 

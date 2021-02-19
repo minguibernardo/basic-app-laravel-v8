@@ -23,12 +23,21 @@ class StoreUpdatePost extends FormRequest
      */
     public function rules()
     {
-        return [
+
+        $rules = [
             //my rules
 
-            'title' => 'required|min:6|max:160',
-            'content' => ['nullable', 'min:6', 'max:10000'],
-             //'img' => ['nullable', 'image']
+            'title' => 'required', //|min:6|max:160|unique:posts, caso o nosso titulo for unico
+            'content' => ['nullable'], //, 'min:6', 'max:10000'
+            'image' => ['required', 'image']
          ];
+
+         if($this->method() == 'PUT'){
+
+            $rules['image'] =  ['nullable', 'image'];
+
+         }
+         return $rules;
     }
+
 }

@@ -11,6 +11,7 @@
     @endif
 
     @csrf
+    <input type="file" name="image" id="image">
     <input type="text" name="title" id="title" placeholder="titulo" value="{{$post->title ?? old('title')}}"> <!--old() e um helper que criar sessao do tipo flash que mentem os dados nos inptus temporariamente-->
     <textarea id="content" name="content" rows="4" cols="25" placeholder="Escreva uma descricao aqui" style="margin-top: 20px;">{{$post->content ?? old('content')}}</textarea>
     <button type="submit" id="send" value="send" style="margin-top: 20px;"> {{$edit ?? $add}} </button>

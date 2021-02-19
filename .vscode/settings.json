@@ -9,6 +9,7 @@
         "dentro",
         "depurar",
         "dizer",
+        "endforeach",
         "formulario",
         "fuction",
         "informacao",
@@ -28,5 +29,11 @@
         "todos",
         "tudo",
         "variavel"
+    ],
+    "cSpell.enableFiletypes": [
+        "bat",
+        "blade",
+        "clojure",
+        "coffeescript"
     ]
 }

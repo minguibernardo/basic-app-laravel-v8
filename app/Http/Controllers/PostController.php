@@ -5,7 +5,8 @@ namespace App\Http\Controllers;
 use App\Http\Requests\storeUpdatePost;
 use App\Models\Post;
 use Illuminate\Http\Request;
-use Mockery\Undefined;
+use Illuminate\Support\Str;
+
 
 class PostController extends Controller
 {
@@ -19,11 +20,12 @@ class PostController extends Controller
         //como ordenar uma lista no laravel vc pode usar ::orderBy('id', 'DESC')/OU ASC OU ainda o latest
         //dd($allpost) ; depurar uma variavel
 
-         return view('admin.post.list_view', compact('posts'));
+        return view('admin.post.list_view', compact('posts'));
     }
     // add function return view
     public function add()
     {
+
 
         $add = 'Save Post';
         return view('admin.post.add_view', compact('add'));
@@ -38,14 +40,20 @@ class PostController extends Controller
 
     //fuction que recebe as informacao do formulario via post e manda para BD
 
-    public function store(storeUpdatePost  $request)
-    {
 
-        // dd($response->all()); // se quiser pegar todos dados dentro da requisicao basta dizer all();
+    public function store(storeUpdatePost  $request)  {
 
-        //pegando o nosso model  Post
-        Post::create($request->all()); //inserindo tudo de uma so vez com metodo all();  //ou um por um se precisar $response->title,
+         $data = $request->all();
 
+        if ($request->image && $request->image->isValid()) {
+
+            $name = Str::of($request->title)->slug('-').'.'.$request->image->getClientOriginalExtension();
+
+            $image = $request->image->storeAs('posts',$name);
+            $data['image'] = $image;
+        }
+
+        Post::create($data); //inserindo tudo de uma so vez com metodo all();  //ou um por um se precisar $response->title,
         return redirect()->route('post.list')->with('message', 'O post foi adicionado com sucesso'); //leva para pagina de listagem
     }
 
@@ -88,7 +96,7 @@ class PostController extends Controller
             return redirect()->back();
         }
 
-        return view('admin.post.edit_view', compact('post','edit'));
+        return view('admin.post.edit_view', compact('post', 'edit'));
     }
 
     public function update(StoreUpdatePost $request, $id)
@@ -110,19 +118,18 @@ class PostController extends Controller
 
     public function search(Request $request)
     {
-         //->toSql(); // debugando a query usa o toSql juntamente com o dd para exbicao de resultado
+        //->toSql(); // debugando a query usa o toSql juntamente com o dd para exbicao de resultado
 
-          $filitros = $request->except('_token');//except: pega todo o array da requisicao menos o _token
+        $filitros = $request->except('_token'); //except: pega todo o array da requisicao menos o _token
 
-          $palavra = $request->search; //pega a palavra chave da pesquisa
+        $palavra = $request->search; //pega a palavra chave da pesquisa
 
-          $posts = Post::where('title','LIKE', "%{$request->search}%")
-         ->orWhere('content','LIKE',"%{$request->search}%")
-         ->paginate();
+        $posts = Post::where('title', 'LIKE', "%{$request->search}%")
+            ->orWhere('content', 'LIKE', "%{$request->search}%")
+            ->paginate();
 
 
 
-         return view('admin.post.list_view', compact('posts','palavra','filitros'));
-
+        return view('admin.post.list_view', compact('posts', 'palavra', 'filitros'));
     }
 }
